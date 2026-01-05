@@ -402,7 +402,7 @@ export default function ReportClient({
             This report was automatically generated on {generatedDate || 'Loading...'}
           </p>
           <p className="mt-2 text-sm font-semibold text-black/70">
-            © {new Date().getFullYear()} Ximy Vault Analytics - All Rights Reserved
+            © {new Date().getFullYear()} Kaira Atelier Analytics - All Rights Reserved
           </p>
         </div>
       </div>

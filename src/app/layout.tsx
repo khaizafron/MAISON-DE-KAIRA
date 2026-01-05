@@ -9,8 +9,8 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: "Ximy Vault",
-  description: "Curated vintage fashion",
+  title: "Kaira Atelier",
+  description: "Wardrobe for your softer days.",
 }
 
 export default function RootLayout({

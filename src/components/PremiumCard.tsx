@@ -41,7 +41,7 @@ export const PremiumCard: React.FC<PremiumCardProps> = ({ item, index }) => {
     y.set(0);
   };
 
-  const primaryImage = item.images.find(img => img.is_primary) || item.images[0];
+  const primaryImage = item.images.find(img => img.is_primary) || item.images[0] || { image_url: '/minimal.jpg' };
 
   return (
     <motion.div

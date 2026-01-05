@@ -140,7 +140,7 @@ export default function ItemDetailPage() {
     )
 
     window.open(
-      `https://wa.me/60149226456?text=${message}`,
+      `https://wa.me/601126941552?text=${message}`,
       "_blank",
       "noopener,noreferrer"
     )

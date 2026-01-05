@@ -11,7 +11,7 @@ const CONCIERGE_CHANNELS = [
     id: "01",
     name: "Liaison via WhatsApp",
     label: "Immediate Acquisition",
-    link: "https://wa.me/60149226456",
+    link: "https://wa.me/601126941552",
     img: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=1200", // High-end boutique interior
     meta: "Direct line to our senior curators."
   },
@@ -19,7 +19,7 @@ const CONCIERGE_CHANNELS = [
     id: "02",
     name: "Visual Narrative / Tiktok",
     label: "Digital Curation",
-    link: "https://tiktok.com/@ximyvault",
+    link: "https://tiktok.com/@kairaatelier",
     img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200", // High-fashion editorial
     meta: "Daily updates from the vault floor."
   },
@@ -27,7 +27,7 @@ const CONCIERGE_CHANNELS = [
     id: "03",
     name: "Formal Inquiry / Email",
     label: "Institutional Correspondence",
-    link: "mailto:ximyvault@gmail.com",
+    link: "mailto:kairaatelier@gmail.com",
     img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200", // Minimalist architecture
     meta: "Museum lending and press relations."
   }
@@ -176,9 +176,9 @@ const ContactPage: React.FC = () => {
             
             <div className="grid grid-cols-2 gap-x-20 gap-y-10">
               {[
-                { name: "Instagram", link: "https://instagram.com/ximyvault", icon: <Instagram /> },
-                { name: "Facebook", link: "https://facebook.com/ximyvault", icon: <Globe /> },
-                { name: "TikTok", link: "https://tiktok.com/@ximysthrifted13", icon: <Compass /> },
+                { name: "Instagram", link: "https://instagram.com/kairaatelier", icon: <Instagram /> },
+                { name: "Facebook", link: "https://facebook.com/kairaatelier", icon: <Globe /> },
+                { name: "TikTok", link: "https://tiktok.com/@kairaatelier", icon: <Compass /> },
                 { name: "The Archive", link: "#", icon: <Sparkles /> }
               ].map((item) => (
                 <a key={item.name} href={item.link} className="flex flex-col gap-4 group cursor-pointer">

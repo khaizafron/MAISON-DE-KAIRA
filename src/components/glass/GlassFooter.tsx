@@ -19,14 +19,13 @@ export function GlassFooter({ className }: GlassFooterProps) {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold tracking-tight text-black dark:text-white">
-              Ximy Vault
+              Kaira Atelier
             </h3>
             <p className="text-xs font-medium leading-relaxed text-black/50 dark:text-white/40">
-              Curated vintage pieces.<br />Timeless style.
+               Verified pieces<br />Preserved legacy.
             </p>
             <p className="text-xs leading-relaxed text-black/40 dark:text-white/30">
-              A carefully selected collection of vintage and modern pieces,
-              chosen for quality, character, and individuality.
+              A considered edit of past and present, chosen for quality, character, and quiet impact.
             </p>
           </div>
 
@@ -74,20 +73,20 @@ export function GlassFooter({ className }: GlassFooterProps) {
             </h4>
             <div className="flex flex-col gap-2.5 text-xs text-black/50 dark:text-white/40">
               <a
-                href="mailto:admin@ximyvault.com"
+                href="mailto:admin@kairaatelier.com"
                 className="transition-all hover:translate-x-0.5 hover:text-black dark:hover:text-white"
               >
-                ximyvault@gmail.com
+                kairaatelier@gmail.com
               </a>
               <a
-                href="https://wa.me/60149226456"
+                href="https://wa.me/601126941552"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-all hover:translate-x-0.5 hover:text-black dark:hover:text-white"
               >
-                +60 14-922 6456
+                +60 11-2694 1552
               </a>
-              <p>Johor Bahru, Malaysia</p>
+              <p>Kuala Lumpur, Malaysia</p>
             </div>
           </div>
 
@@ -105,7 +104,7 @@ export function GlassFooter({ className }: GlassFooterProps) {
                 Instagram
               </a>
               <a
-                href="https://tiktok.com/@ximysthrifted13"
+                href="https://tiktok.com/@kairaatelier"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-all hover:translate-x-0.5 hover:text-black dark:hover:text-white"
@@ -127,7 +126,7 @@ export function GlassFooter({ className }: GlassFooterProps) {
         <div className="mt-12 border-t border-black/5 pt-8 dark:border-white/5">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-xs text-black/40 dark:text-white/30">
-              © {new Date().getFullYear()} Ximy Vault. All rights reserved.
+              © {new Date().getFullYear()}  Kaira Atelier. All rights reserved.
             </p>
             <div className="flex gap-6 text-xs text-black/40 dark:text-white/30">
               <Link

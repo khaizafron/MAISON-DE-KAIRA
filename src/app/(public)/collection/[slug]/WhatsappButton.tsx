@@ -41,7 +41,7 @@ export function WhatsAppButton({
 
     /* 2. BUKA WHATSAPP TERUS (WAJIB sync – mobile requirement) */
     window.open(
-      `https://wa.me/60149226456?text=${text}`,
+      `https://wa.me/601126941552?text=${text}`,
       "_blank",
       "noopener,noreferrer"
     )

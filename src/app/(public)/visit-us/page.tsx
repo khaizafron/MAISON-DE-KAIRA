@@ -3,25 +3,82 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Calendar, Globe, Sparkles, ArrowRight, ChevronRight, Fingerprint, Compass } from 'lucide-react';
-import { MagneticButton } from '@/components/MagneticButton';
-import Link from "next/link"
+
+import Link from 'next/link';
+
+const MagneticButton = ({ children }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const buttonRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    setPosition({ x: x * 0.3, y: y * 0.3 });
+  };
+
+  const handleMouseLeave = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  return (
+    <div
+      ref={buttonRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        transition: 'transform 0.2s ease-out'
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const SITE_EXHIBITIONS = [
   {
     id: "SITE // 01",
-    name: "The J @ Seri Alam",
-    subtext: "ARCHIVAL HUB / JOHOR",
-    address: "The J @ Seri Alam, Johor Bahru",
-    area: "Seri Alam, Pasir Gudang, Johor",
-    schedule: "Thu & Sun / 7:00 pm - 12:00 am",
-    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.4581766370734!2d103.86773147066637!3d1.4961178577762115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da6b58b4b372ad%3A0x2ce128d63eb5a17f!2sThe%20J%20%40%20Seri%20Alam!5e0!3m2!1sen!2smy!4v1765758087645!5m2!1sen!2smy",
-    img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200",
-    description: "Our primary outpost for tactical vintage acquisition. A high-energy evening market setting where the vault opens its most sought-after silhouettes."
+    name: "SACC Mall @ Shah Alam",
+    subtext: "ARCHIVAL HUB / SELANGOR",
+    address: "SACC Mall Car Park, Shah Alam",
+    area: "Shah Alam, Selangor",
+    schedule: "Saturday / 6:00 pm - 12:00 am",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.0904693529164!2d101.51546707497086!3d3.0704985469052195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc5286dad9dd53%3A0x1a54293008c13bb3!2sSACC%20Mall!5e0!3m2!1sen!2smy!4v1767579182203!5m2!1sen!2smy",
+    mapLink: "https://maps.app.goo.gl/your-sacc-link",
+    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1200",
+    description: "Located in the open car park facing SACC Mall. A prime weekend evening destination for collectors seeking authenticated vintage pieces under the city lights."
+  },
+  {
+    id: "SITE // 02",
+    name: "Angsana Mall @ Johor Bahru",
+    subtext: "MORNING VAULT / JOHOR",
+    address: "Angsana Johor Bahru Mall",
+    area: "Johor Bahru, Johor",
+    schedule: "Saturday / 8:00 am - 12:00 pm",
+    scheduleExtra: "Special Ramadan Hours: Daily / 6:00 pm - 1:00 am",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.458814900698!2d103.70308100973831!3d1.495766761084828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da72bf8ae5d21f%3A0xd6d33197fa98bc16!2sAngsana%20Johor%20Bahru%20Mall%2C%20Johor%20Bahru!5e0!3m2!1sen!2smy!4v1767579409608!5m2!1sen!2smy",
+    mapLink: "https://maps.app.goo.gl/your-angsana-link",
+    img: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&q=80&w=1200",
+    description: "Our signature morning market experience. Early access for dedicated collectors, with extended evening hours throughout Ramadan 2025 for a blessed selection period."
+  },
+  {
+    id: "SITE // 03",
+    name: "CBS Mall @ Kota Damansara",
+    subtext: "SUNDAY ARCHIVE / SELANGOR",
+    address: "CBS Kota Damansara",
+    area: "Kota Damansara, Petaling Jaya, Selangor",
+    schedule: "Sunday / 6:00 pm - 12:00 am",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.7331946814884!2d101.57190367497121!3d3.1648348968105076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4f006aacdf73%3A0xa4c73a299ed37886!2sCBS%20Kota%20damansara!5e0!3m2!1sen!2smy!4v1767579545357!5m2!1sen!2smy",
+    mapLink: "https://maps.app.goo.gl/your-cbs-link",
+    img: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&q=80&w=1200",
+    description: "Your exclusive Sunday evening sanctuary. A carefully curated selection in the heart of Kota Damansara, perfect for closing your week with timeless acquisitions."
   }
 ];
 
-const VisitUsPage: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const VisitUsPage = () => {
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -32,10 +89,9 @@ const VisitUsPage: React.FC = () => {
 
   return (
     <div
-  ref={containerRef}
-  className="relative bg-[#FAF9F6] text-[#1A1A1A] overflow-hidden selection:bg-[#A68966] selection:text-white -mt-24"
->
-
+      ref={containerRef}
+      className="relative bg-[#FAF9F6] text-[#1A1A1A] overflow-hidden selection:bg-[#A68966] selection:text-white"
+    >
       {/* TACTILE OVERLAY (Film Grain) */}
       <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.06] mix-blend-multiply" 
            style={{ backgroundImage: `url('https://grainy-gradients.vercel.app/noise.svg')` }} />
@@ -53,7 +109,7 @@ const VisitUsPage: React.FC = () => {
       <section className="relative h-[110vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none overflow-hidden">
            <span className="absolute top-[20%] left-[-10%] text-[30vw] font-black uppercase tracking-tighter text-black/5 rotate-[-10deg]">OUTPOST</span>
-           <span className="absolute bottom-[20%] right-[-10%] text-[30vw] font-black uppercase tracking-tighter text-black/5 rotate-[5deg]">JOHOR</span>
+           <span className="absolute bottom-[20%] right-[-10%] text-[30vw] font-black uppercase tracking-tighter text-black/5 rotate-[5deg]">KLANG VALLEY</span>
         </div>
 
         <motion.div 
@@ -119,7 +175,7 @@ const VisitUsPage: React.FC = () => {
               { icon: <Fingerprint />, title: "Archive Intel", desc: "Access the full provenance history of pieces not yet listed on our digital platform." },
               { icon: <Globe />, title: "Curated Flow", desc: "Experience a rotating physical selection tailored specifically to the site's energy." },
               { icon: <Sparkles />, title: "Vault Access", desc: "Exclusive priority for on-site visitors to reserve artifacts from the upcoming drops." },
-              { icon: <Clock />, title: "Liaison Hours", desc: "Late-night access designed for the modern collector's nocturnal lifestyle." }
+              { icon: <Clock />, title: "Liaison Hours", desc: "Strategic time slots designed for the modern collector's lifestyle across multiple venues." }
             ].map((item, idx) => (
               <motion.div 
                 key={idx}
@@ -156,16 +212,16 @@ const VisitUsPage: React.FC = () => {
           
           <div className="flex flex-col items-center gap-16 pt-10">
             <MagneticButton>
-  <Link href="/collection">
-    <button
-      type="button"
-      className="px-16 py-8 rounded-full bg-[#1A1A1A] text-white font-bold uppercase tracking-[0.5em] text-[10px] shadow-3xl hover:bg-[#A68966] transition-all flex items-center gap-6 group"
-    >
-      Enter Digital Collection
-      <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
-    </button>
-  </Link>
-</MagneticButton>
+              <Link href="/collection">
+                <button
+                  type="button"
+                  className="px-16 py-8 rounded-full bg-[#1A1A1A] text-white font-bold uppercase tracking-[0.5em] text-[10px] shadow-3xl hover:bg-[#A68966] transition-all flex items-center gap-6 group"
+                >
+                  Enter Digital Collection
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
+                </button>
+              </Link>
+            </MagneticButton>
             <div className="flex flex-col items-center gap-8">
                 <div className="w-px h-32 bg-gradient-to-b from-black/10 to-transparent" />
                 <div className="text-[10px] font-black uppercase tracking-[1.5em] text-black/10 italic">XV Outpost Protocol</div>
@@ -177,7 +233,7 @@ const VisitUsPage: React.FC = () => {
   );
 };
 
-const SiteIntelCard: React.FC<{ site: any, index: number }> = ({ site, index }) => {
+const SiteIntelCard = ({ site, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-100px" });
@@ -282,8 +338,11 @@ const SiteIntelCard: React.FC<{ site: any, index: number }> = ({ site, index }) 
                 <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[#A68966]">
                   <Calendar className="h-5 w-5" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                    <p className="text-lg font-display italic text-black/60">{site.schedule}</p>
+                   {site.scheduleExtra && (
+                     <p className="text-sm font-display italic text-[#A68966]">{site.scheduleExtra}</p>
+                   )}
                    <p className="text-[11px] font-black uppercase tracking-widest text-black/30">Active Protocol</p>
                 </div>
              </div>
@@ -292,7 +351,7 @@ const SiteIntelCard: React.FC<{ site: any, index: number }> = ({ site, index }) 
           <div className="pt-8">
             <MagneticButton>
               <a 
-                href="https://maps.app.goo.gl/Fo9GMMDEQ7H4wNeX7"
+                href={site.mapLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-8 py-7 px-14 rounded-full bg-black text-white font-bold uppercase tracking-[0.4em] text-[10px] shadow-2xl hover:bg-[#A68966] transition-all active:scale-95"

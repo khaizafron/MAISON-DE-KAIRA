@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={inputClass}
-                placeholder="admin@ximyvault.com"
+                placeholder="your email address"
                 required
                 autoComplete="email"
               />
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
         </GlassCard>
 
         <p className="mt-6 text-center text-sm text-black/50">
-          Ximy Vault Admin Portal
+          Kaira Atelier Admin Portal
         </p>
       </div>
     </div>

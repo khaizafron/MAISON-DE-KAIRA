@@ -87,7 +87,7 @@ export default function AboutPage() {
               transition={{ duration: 1 }}
               className="text-[10px] font-black uppercase tracking-[1em] text-black/40 mb-12"
             >
-              The Ximy Manifesto
+              The Kaïra Manifesto
             </motion.div>
             <h1 className="text-[10vw] font-bold tracking-tighter leading-none mb-10 overflow-hidden text-black">
               <motion.span 
@@ -130,7 +130,7 @@ export default function AboutPage() {
             </motion.div>
 
             <div className="space-y-10 text-xl text-black/50 font-light leading-relaxed">
-              <p>We approach fashion as forensic historians. Every fiber in the Ximy Vault is traced to its origin, ensuring provenance and preservation of artistic intent.</p>
+              <p>We approach fashion as forensic historians. Every fiber in the Kaira Atelier is traced to its origin, ensuring provenance and preservation of artistic intent.</p>
               <p>Our collection is a dialogue between the icons of the past and the pioneers of the future.</p>
             </div>
 

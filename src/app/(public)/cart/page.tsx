@@ -29,7 +29,7 @@ export default function CartPage() {
       .join("\n")
     
     const message = `Hai! Barang ni masih ada?\n\n${itemLinks}\n\nTotal: RM ${totalPrice.toFixed(0)}`
-    const whatsappUrl = `https://wa.me/60149226456?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/601126941552?text=${encodeURIComponent(message)}`
     
     window.open(whatsappUrl, '_blank')
   }

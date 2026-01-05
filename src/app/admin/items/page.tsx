@@ -2,15 +2,15 @@ export const dynamic = "force-dynamic"
 
 import { createAdminClient } from "@/lib/supabase/admin"
 import { GlassCard, GlassButton } from "@/components/glass"
-import { getPublicImageUrl } from "@/lib/supabase/storage" // ✅ ADD
+import { getPublicImageUrl } from "@/lib/supabase/storage"
 import Link from "next/link"
 import Image from "next/image"
-import { Plus, Edit, Trash2 } from "lucide-react"
+import { Plus, Edit } from "lucide-react"
 import { DeleteItemButton } from "./DeleteItemButton"
 
 export default async function AdminItemsPage() {
   const supabase = createAdminClient()
-  
+
   const { data: items } = await supabase
     .from("items")
     .select(`
@@ -21,6 +21,7 @@ export default async function AdminItemsPage() {
 
   return (
     <div>
+      {/* HEADER */}
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-black/90">Items</h1>
         <Link href="/admin/items/new">
@@ -31,7 +32,8 @@ export default async function AdminItemsPage() {
         </Link>
       </div>
 
-      <GlassCard className="overflow-hidden p-0">
+      {/* ================= DESKTOP TABLE (UNCHANGED) ================= */}
+      <GlassCard className="hidden overflow-hidden p-0 md:block">
         <table className="w-full">
           <thead>
             <tr className="border-b border-black/10 bg-black/5 text-left text-sm text-black/60">
@@ -44,16 +46,19 @@ export default async function AdminItemsPage() {
           </thead>
           <tbody>
             {items?.map((item) => {
-              const primaryImage = item.images?.find((img: { is_primary: boolean }) => img.is_primary) || item.images?.[0]
-              const imageUrl = getPublicImageUrl(primaryImage?.image_url) // ✅ ADD
-              
+              const primaryImage =
+                item.images?.find((img: any) => img.is_primary) ||
+                item.images?.[0]
+
+              const imageUrl = getPublicImageUrl(primaryImage?.image_url)
+
               return (
                 <tr key={item.id} className="border-b border-black/5">
                   <td className="p-4">
                     <div className="relative h-16 w-16 overflow-hidden rounded-xl bg-black/5">
-                      {imageUrl ? ( // ✅ CHANGE
+                      {imageUrl ? (
                         <Image
-                          src={imageUrl} // ✅ CHANGE
+                          src={imageUrl}
                           alt={item.title}
                           fill
                           className="object-cover"
@@ -65,17 +70,22 @@ export default async function AdminItemsPage() {
                       )}
                     </div>
                   </td>
-                  <td className="p-4 font-medium text-black/90">{item.title}</td>
-                  <td className="p-4 text-black/70">RM {Number(item.price).toFixed(0)}</td>
+
+                  <td className="p-4 font-medium">{item.title}</td>
+                  <td className="p-4">RM {Number(item.price).toFixed(0)}</td>
+
                   <td className="p-4">
-                    <span className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
-                      item.status === 'available' 
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-orange-100 text-orange-700'
-                    }`}>
+                    <span
+                      className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
+                        item.status === "available"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-orange-100 text-orange-700"
+                      }`}
+                    >
                       {item.status}
                     </span>
                   </td>
+
                   <td className="p-4">
                     <div className="flex gap-2">
                       <Link href={`/admin/items/${item.id}/edit`}>
@@ -83,7 +93,10 @@ export default async function AdminItemsPage() {
                           <Edit className="h-4 w-4" />
                         </GlassButton>
                       </Link>
-                      <DeleteItemButton itemId={item.id} itemTitle={item.title} />
+                      <DeleteItemButton
+                        itemId={item.id}
+                        itemTitle={item.title}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -91,13 +104,91 @@ export default async function AdminItemsPage() {
             })}
           </tbody>
         </table>
-        
+
         {(!items || items.length === 0) && (
           <div className="p-10 text-center text-black/60">
             No items yet. Add your first item!
           </div>
         )}
       </GlassCard>
+
+      {/* ================= MOBILE CARDS ================= */}
+      <div className="space-y-4 md:hidden">
+        {items?.map((item) => {
+          const primaryImage =
+            item.images?.find((img: any) => img.is_primary) ||
+            item.images?.[0]
+
+          const imageUrl = getPublicImageUrl(primaryImage?.image_url)
+
+          return (
+            <GlassCard key={item.id} className="p-4">
+              <div className="flex gap-4">
+                {/* IMAGE */}
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-black/5">
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-xs text-black/30">
+                      No img
+                    </div>
+                  )}
+                </div>
+
+                {/* INFO */}
+                <div className="flex flex-1 flex-col">
+                  <div className="font-medium text-black/90">
+                    {item.title}
+                  </div>
+
+                  <div className="mt-1 text-sm text-black/60">
+                    RM {Number(item.price).toFixed(0)}
+                  </div>
+
+                  <span
+                    className={`mt-2 inline-flex w-fit rounded-full px-2 py-1 text-xs font-medium ${
+                      item.status === "available"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-orange-100 text-orange-700"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+                </div>
+              </div>
+
+              {/* ACTIONS */}
+              <div className="mt-4 flex gap-2">
+                <Link
+                  href={`/admin/items/${item.id}/edit`}
+                  className="flex-1"
+                >
+                  <GlassButton className="w-full gap-2">
+                    <Edit className="h-4 w-4" />
+                    Edit
+                  </GlassButton>
+                </Link>
+
+                <DeleteItemButton
+                  itemId={item.id}
+                  itemTitle={item.title}
+                />
+              </div>
+            </GlassCard>
+          )
+        })}
+
+        {(!items || items.length === 0) && (
+          <GlassCard className="p-10 text-center text-black/60">
+            No items yet. Add your first item!
+          </GlassCard>
+        )}
+      </div>
     </div>
   )
 }

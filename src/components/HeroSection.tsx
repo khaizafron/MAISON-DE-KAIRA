@@ -170,7 +170,7 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-8xl md:text-[7rem] font-bold tracking-tighter text-white leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
-            XIMY{" "}
+            KAIRA{" "}
             <span
   className="
     relative inline-block
@@ -182,7 +182,7 @@ export const HeroSection: React.FC = () => {
     bg-clip-text
   "
 >
-  VAULT
+  ATELIER
   <motion.div 
     initial={{ scaleX: 0 }}
     animate={{ scaleX: 1 }}

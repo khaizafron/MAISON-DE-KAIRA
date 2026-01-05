@@ -167,8 +167,7 @@ export default function HomePage() {
         </h2>
 
         <p className="mt-4 text-base md:text-xl text-black/50 leading-relaxed max-w-lg">
-          Every piece in Ximy Vault undergoes a rigorous verification process.
-          We don’t just sell vintage; we preserve legacy.
+          Kaira Atelier verifies every piece; we don’t just sell clothes, we preserve legacy.
         </p>
       </motion.div>
 

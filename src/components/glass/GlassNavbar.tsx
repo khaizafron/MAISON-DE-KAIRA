@@ -26,7 +26,7 @@ export function GlassNavbar() {
               href="/"
               className="text-xl font-semibold tracking-tight text-black dark:text-white"
             >
-              Ximy Vault
+              KAIRA ATELIER
             </Link>
 
             <div className="hidden items-center gap-6 md:flex">

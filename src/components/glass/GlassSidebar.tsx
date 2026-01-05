@@ -36,7 +36,7 @@ export function GlassSidebar() {
     <>
       {/* MOBILE TOP BAR */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-white/80 px-4 py-3 backdrop-blur-xl lg:hidden">
-        <span className="text-lg font-semibold">Ximy Admin</span>
+        <span className="text-lg font-semibold">KAIRA Admin</span>
         <button onClick={() => setOpen(true)}>
           <Menu className="h-6 w-6" />
         </button>
@@ -64,7 +64,7 @@ export function GlassSidebar() {
         {/* HEADER */}
         <div className="mb-10 flex items-center justify-between">
           <Link href="/admin/dashboard" className="text-2xl font-semibold">
-            Ximy Admin
+            kaira Admin
           </Link>
           <button onClick={() => setOpen(false)} className="lg:hidden">
             <X className="h-6 w-6" />
