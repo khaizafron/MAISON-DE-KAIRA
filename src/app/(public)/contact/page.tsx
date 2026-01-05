@@ -19,15 +19,15 @@ const CONCIERGE_CHANNELS = [
     id: "02",
     name: "Visual Narrative / Tiktok",
     label: "Digital Curation",
-    link: "https://tiktok.com/@kairaatelier",
+    link: "https://tiktok.com/@atelierkaira",
     img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200", // High-fashion editorial
-    meta: "Daily updates from the vault floor."
+    meta: "Daily updates from the atelier floor."
   },
   {
     id: "03",
     name: "Formal Inquiry / Email",
     label: "Institutional Correspondence",
-    link: "mailto:kairaatelier@gmail.com",
+    link: "mailto:atelierkaira@gmail.com",
     img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200", // Minimalist architecture
     meta: "Museum lending and press relations."
   }
@@ -93,7 +93,7 @@ const ContactPage: React.FC = () => {
 
         {/* Floating Text Artifact */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-between px-10 pointer-events-none opacity-5 select-none">
-          <span className="text-[20vw] font-black uppercase tracking-tighter transform -rotate-90 origin-center">VAULT</span>
+          <span className="text-[20vw] font-black uppercase tracking-tighter transform -rotate-90 origin-center">ATELIER</span>
           <span className="text-[20vw] font-black uppercase tracking-tighter transform rotate-90 origin-center">ARCHIVE</span>
         </div>
       </section>
@@ -176,9 +176,9 @@ const ContactPage: React.FC = () => {
             
             <div className="grid grid-cols-2 gap-x-20 gap-y-10">
               {[
-                { name: "Instagram", link: "https://instagram.com/kairaatelier", icon: <Instagram /> },
-                { name: "Facebook", link: "https://facebook.com/kairaatelier", icon: <Globe /> },
-                { name: "TikTok", link: "https://tiktok.com/@kairaatelier", icon: <Compass /> },
+                { name: "Instagram", link: "https://instagram.com/atelierkaira", icon: <Instagram /> },
+                { name: "Facebook", link: "https://facebook.com/atelierkaira", icon: <Globe /> },
+                { name: "TikTok", link: "https://tiktok.com/@atelierkaira", icon: <Compass /> },
                 { name: "The Archive", link: "#", icon: <Sparkles /> }
               ].map((item) => (
                 <a key={item.name} href={item.link} className="flex flex-col gap-4 group cursor-pointer">

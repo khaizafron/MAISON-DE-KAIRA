@@ -53,7 +53,7 @@ const SITE_EXHIBITIONS = [
   {
     id: "SITE // 02",
     name: "Angsana Mall @ Johor Bahru",
-    subtext: "MORNING VAULT / JOHOR",
+    subtext: "MORNING ATELIER / JOHOR",
     address: "Angsana Johor Bahru Mall",
     area: "Johor Bahru, Johor",
     schedule: "Saturday / 8:00 am - 12:00 pm",
@@ -174,7 +174,7 @@ const VisitUsPage = () => {
             {[
               { icon: <Fingerprint />, title: "Archive Intel", desc: "Access the full provenance history of pieces not yet listed on our digital platform." },
               { icon: <Globe />, title: "Curated Flow", desc: "Experience a rotating physical selection tailored specifically to the site's energy." },
-              { icon: <Sparkles />, title: "Vault Access", desc: "Exclusive priority for on-site visitors to reserve artifacts from the upcoming drops." },
+              { icon: <Sparkles />, title: "Atelier Access", desc: "Exclusive priority for on-site visitors to reserve artifacts from the upcoming drops." },
               { icon: <Clock />, title: "Liaison Hours", desc: "Strategic time slots designed for the modern collector's lifestyle across multiple venues." }
             ].map((item, idx) => (
               <motion.div 

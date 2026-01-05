@@ -90,7 +90,7 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="max-w-md text-black/40 text-lg"
               >
-                Discover the latest additions to our vault, meticulously selected for their timeless appeal and quality.
+                Discover the latest additions to our Atelier, meticulously selected for their timeless appeal and quality.
               </motion.p>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function HomePage() {
         </h2>
 
         <p className="mt-4 text-base md:text-xl text-black/50 leading-relaxed max-w-lg">
-          Kaira Atelier verifies every piece; we don’t just sell clothes, we preserve legacy.
+          Atelier Kaira verifies every piece; we don’t just sell clothes, we preserve legacy.
         </p>
       </motion.div>
 

@@ -130,7 +130,7 @@ export default function AboutPage() {
             </motion.div>
 
             <div className="space-y-10 text-xl text-black/50 font-light leading-relaxed">
-              <p>We approach fashion as forensic historians. Every fiber in the Kaira Atelier is traced to its origin, ensuring provenance and preservation of artistic intent.</p>
+              <p>We approach fashion as forensic historians. Every fiber in the Atelier Kaira is traced to its origin, ensuring provenance and preservation of artistic intent.</p>
               <p>Our collection is a dialogue between the icons of the past and the pioneers of the future.</p>
             </div>
 

@@ -69,7 +69,7 @@ export async function POST() {
       );
     }
 
-    const prompt = `You are an AI analyst for Kaira Atelier, a collectible items store. Based on the following metrics, provide 3-4 concise, actionable business insights in Bahasa Malaysia (casual/trendy tone). Focus on trends, opportunities, and recommendations.
+    const prompt = `You are an AI analyst for Atelier Kaira, a collectible items store. Based on the following metrics, provide 3-4 concise, actionable business insights in Bahasa Malaysia (casual/trendy tone). Focus on trends, opportunities, and recommendations.
 
 Metrics:
 - Total Items: ${metrics.totalItems}

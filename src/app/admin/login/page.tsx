@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
         </GlassCard>
 
         <p className="mt-6 text-center text-sm text-black/50">
-           Kaira Atelier Admin Portal
+           Atelier Kaira Admin Portal
         </p>
       </div>
     </div>

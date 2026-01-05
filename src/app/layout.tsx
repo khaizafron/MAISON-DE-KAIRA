@@ -9,7 +9,7 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: "Kaira Atelier",
+  title: "Atelier Kaira",
   description: "Wardrobe for your softer days.",
 }
 

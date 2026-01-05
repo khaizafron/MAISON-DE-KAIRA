@@ -19,7 +19,7 @@ export function GlassFooter({ className }: GlassFooterProps) {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold tracking-tight text-black dark:text-white">
-              Kaira Atelier
+              Atelier Kaira
             </h3>
             <p className="text-xs font-medium leading-relaxed text-black/50 dark:text-white/40">
                Verified pieces<br />Preserved legacy.
@@ -73,10 +73,10 @@ export function GlassFooter({ className }: GlassFooterProps) {
             </h4>
             <div className="flex flex-col gap-2.5 text-xs text-black/50 dark:text-white/40">
               <a
-                href="mailto:admin@kairaatelier.com"
+                href="mailto:admin@atelierkaira.com"
                 className="transition-all hover:translate-x-0.5 hover:text-black dark:hover:text-white"
               >
-                kairaatelier@gmail.com
+                atelierkaira@gmail.com
               </a>
               <a
                 href="https://wa.me/601126941552"
@@ -104,7 +104,7 @@ export function GlassFooter({ className }: GlassFooterProps) {
                 Instagram
               </a>
               <a
-                href="https://tiktok.com/@kairaatelier"
+                href="https://tiktok.com/@atelierkaira"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-all hover:translate-x-0.5 hover:text-black dark:hover:text-white"
@@ -126,7 +126,7 @@ export function GlassFooter({ className }: GlassFooterProps) {
         <div className="mt-12 border-t border-black/5 pt-8 dark:border-white/5">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-xs text-black/40 dark:text-white/30">
-              © {new Date().getFullYear()}  Kaira Atelier. All rights reserved.
+              © {new Date().getFullYear()}  Atelier Kaira. All rights reserved.
             </p>
             <div className="flex gap-6 text-xs text-black/40 dark:text-white/30">
               <Link

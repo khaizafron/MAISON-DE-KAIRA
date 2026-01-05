@@ -103,7 +103,7 @@ export const PremiumCard: React.FC<PremiumCardProps> = ({ item, index }) => {
           
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs font-bold uppercase tracking-widest text-black/30">Available in Vault</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-black/30">Available in our Atelier</span>
           </div>
         </div>
         
