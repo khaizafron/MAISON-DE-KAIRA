@@ -159,7 +159,7 @@ if (!hasRecordedView.current) {
   if (!item) return
 
   // 🔗 PUBLIC ITEM PAGE (INILAH KUNCI)
-  const productUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/item/${item.slug}`
+  const productUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/collection/${item.slug}`
 
   const message = encodeURIComponent(
     `Hi 👋\nMay I check if this item is still available?\n\n${item.title}\n${productUrl}\n\nThank you.`
