@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/components/contexts/CartContext"
 import { useState } from "react"
@@ -24,9 +25,16 @@ export function GlassNavbar() {
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="text-xl font-semibold tracking-tight text-black dark:text-white"
+              className="flex items-center"
             >
-              ATELIER KAIRA
+              <Image 
+                src="/ATELIER-LOGO.svg" 
+                alt="Atelier Kaira Logo" 
+                width={140}
+                height={28}
+                className="h-8 w-auto"
+                priority
+              />
             </Link>
 
             <div className="hidden items-center gap-6 md:flex">
