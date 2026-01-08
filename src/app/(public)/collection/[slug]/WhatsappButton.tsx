@@ -2,64 +2,48 @@
 
 import { GlassButton } from "@/components/glass"
 import { MessageCircle } from "lucide-react"
-import { createClient } from "@/lib/supabase/client"
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 
-/* helper kecil — mobile safe */
-function generateVisitorId() {
-  if (typeof crypto !== "undefined" && crypto.getRandomValues) {
-    return Array.from(crypto.getRandomValues(new Uint8Array(16)))
+function getVisitorIdSafe() {
+  if (typeof window === "undefined") return null
+  let id = window.localStorage.getItem("visitor_id")
+  if (!id) {
+    id = Array.from(crypto.getRandomValues(new Uint8Array(16)))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("")
+    window.localStorage.setItem("visitor_id", id)
   }
-
-  // fallback terakhir (very rare)
-  return `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  return id
 }
 
 interface WhatsAppButtonProps {
-  item: {
-    id: string
-    title: string
-  }
-  primaryImage?: {
-    image_url: string
-  }
+  item: { id: string; title: string; slug: string }
 }
 
-export function WhatsAppButton({
-  item,
-  primaryImage,
-}: WhatsAppButtonProps) {
+export function WhatsAppButton({ item }: WhatsAppButtonProps) {
   const handleClick = () => {
-    /* 1. bina mesej */
-    const text = encodeURIComponent(
-      `barang ni ada stok?\n\n` +
-        `Item: ${item.title}\n` +
-        `Item ID: ${item.id}` +
-        (primaryImage ? `\nImage: ${primaryImage.image_url}` : "")
+    // Open WhatsApp
+    const productUrl = `${window.location.origin}/collection/${item.slug}`
+    const message = encodeURIComponent(
+      `Hi 👋\nMay I check if this item is still available?\n\n${item.title}\n${productUrl}\n\nThank you.`
     )
+    window.open(`https://wa.me/601126941552?text=${message}`, "_blank", "noopener,noreferrer")
 
-    /* 2. BUKA WHATSAPP TERUS (WAJIB sync – mobile requirement) */
-    window.open(
-      `https://wa.me/601126941552?text=${text}`,
-      "_blank",
-      "noopener,noreferrer"
+    // Track - NO AWAIT, fire and forget
+    const supabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
-
-    /* 3. TRACK BACKGROUND — SAFE (NO unhandled promise) */
-const supabase = createClient()
-
-;(async () => {
-  try {
-    await supabase.from("whatsapp_clicks").insert({
-      item_id: item.id,
-      visitor_id: generateVisitorId(),
-    })
-  } catch {
-    // silent – analytics must NEVER crash UI
-  }
-})()
-
+    
+    const visitorId = getVisitorIdSafe()
+    if (visitorId) {
+      supabase.from("whatsapp_clicks").insert({
+        item_id: item.id,
+        visitor_id: visitorId,
+      }).then(({ error }) => {
+        if (error) console.error('Track failed:', error.message)
+      })
+    }
   }
 
   return (

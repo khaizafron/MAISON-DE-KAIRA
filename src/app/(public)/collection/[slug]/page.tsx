@@ -6,11 +6,11 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { GlassCard, GlassButton } from "@/components/glass"
 import { AddToCartButton } from "@/components/AddToCartButton"
 import { ImageGallery } from "./ImageGallery"
+import { WhatsAppButton } from "./WhatsappButton"
 import Link from "next/link"
-import { ArrowLeft, MapPin, MessageCircle } from "lucide-react"
+import { ArrowLeft, MapPin } from "lucide-react"
 import { useEffect, useState, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
-
 
 interface ItemImage {
   id: string
@@ -129,20 +129,20 @@ export default function ItemDetailPage() {
         }
 
         setItem(data as Item)
+        
         // ✅ RECORD ITEM VIEW (SAFE)
-if (!hasRecordedView.current) {
-  hasRecordedView.current = true
+        if (!hasRecordedView.current) {
+          hasRecordedView.current = true
 
-  try {
-    await supabase.from("analytics_item_views").insert({
-      item_id: data.id,
-      visitor_id: getVisitorId(),
-    })
-  } catch {
-    // analytics must NEVER break UX
-  }
-}
-
+          try {
+            await supabase.from("analytics_item_views").insert({
+              item_id: data.id,
+              visitor_id: getVisitorId(),
+            })
+          } catch {
+            // analytics must NEVER break UX
+          }
+        }
 
       } catch (err) {
         console.error('Fetch error:', err)
@@ -154,40 +154,6 @@ if (!hasRecordedView.current) {
 
     fetchItem()
   }, [slug, router])
-
-  const handleWhatsAppClick = () => {
-  if (!item) return
-
-  // 🔗 PUBLIC ITEM PAGE (INILAH KUNCI)
-  const productUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/collection/${item.slug}`
-
-  const message = encodeURIComponent(
-    `Hi 👋\nMay I check if this item is still available?\n\n${item.title}\n${productUrl}\n\nThank you.`
-  )
-
-  window.open(
-    `https://wa.me/601126941552?text=${message}`,
-    "_blank",
-    "noopener,noreferrer"
-  )
-
-  // 📊 analytics (JANGAN BUANG)
-  try {
-    navigator.sendBeacon(
-      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/whatsapp_clicks`,
-      new Blob(
-        [
-          JSON.stringify({
-            item_id: item.id,
-            visitor_id: getVisitorId(),
-          }),
-        ],
-        { type: "application/json" }
-      )
-    )
-  } catch {}
-}
-
 
   if (loading) {
     return (
@@ -203,11 +169,10 @@ if (!hasRecordedView.current) {
 
   const primaryImage = item.images?.find((img) => img.is_primary) || item.images?.[0]
   const isSold = item.status === "sold" || item.status === "offline_sold"
-const measurements =
-  Array.isArray(item.measurements)
-    ? item.measurements[0]
-    : item.measurements ?? null
-
+  const measurements =
+    Array.isArray(item.measurements)
+      ? item.measurements[0]
+      : item.measurements ?? null
 
   const measurementLabels = [
     { key: "pit_to_pit" as const, label: "Pit to Pit" },
@@ -278,6 +243,7 @@ const measurements =
             </GlassCard>
           )}
 
+          {/* ✅ BUTTONS SECTION - UPDATED */}
           <div className="mt-8 flex flex-col gap-3">
             {isSold ? (
               <GlassButton disabled className="w-full opacity-50">
@@ -296,10 +262,15 @@ const measurements =
                   size="lg"
                   className="w-full"
                 />
-                <GlassButton onClick={handleWhatsAppClick} className="w-full gap-2">
-                  <MessageCircle className="h-5 w-5" />
-                  Buy via WhatsApp
-                </GlassButton>
+
+                {/* ✅ NEW: WhatsAppButton component */}
+                <WhatsAppButton
+                  item={{
+                    id: item.id,
+                    title: item.title,
+                    slug: item.slug,
+                  }}
+                />
               </>
             )}
           </div>
