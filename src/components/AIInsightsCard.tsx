@@ -45,22 +45,29 @@ export default function AIInsightsCard({
 
   return (
     <GlassCard className="relative overflow-hidden">
+      {/* Background glow */}
       <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-gradient-to-tr from-blue-400/20 to-cyan-400/20 blur-3xl" />
 
       <div className="relative">
+        {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 p-3 shadow-lg">
               <Sparkles className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-black/90">AI Business Insights</h2>
+              <h2 className="text-xl font-semibold text-black/90">
+                AI Business Insights
+              </h2>
               <p className="text-sm text-black/60">
-                {isCached ? 'Cached insights (auto-refresh hourly)' : 'Fresh AI-generated insights'}
+                {isCached
+                  ? 'Cached insights (auto-refresh hourly)'
+                  : 'Fresh AI-generated insights'}
               </p>
             </div>
           </div>
+
           <button
             onClick={generateInsights}
             disabled={loading}
@@ -80,34 +87,56 @@ export default function AIInsightsCard({
           </button>
         </div>
 
+        {/* Content */}
         {insight ? (
-          <div className="space-y-4">
+          <div className="space-y-5">
+            {/* Insight text */}
             <div className="rounded-2xl bg-gradient-to-br from-white/60 to-white/30 p-6 backdrop-blur-sm">
               <div className="whitespace-pre-wrap text-black/80 leading-relaxed">
                 {insight}
               </div>
             </div>
 
+            {/* 🔝 TOP METRICS (3 ONLY) */}
             {metrics && (
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-xl bg-white/40 p-4 backdrop-blur-sm">
                   <p className="text-xs text-black/60">Total Items</p>
-                  <p className="text-2xl font-bold text-black/90">{metrics.totalItems}</p>
+                  <p className="text-2xl font-bold text-black/90">
+                    {metrics.totalItems}
+                  </p>
                 </div>
+
                 <div className="rounded-xl bg-white/40 p-4 backdrop-blur-sm">
                   <p className="text-xs text-black/60">Revenue</p>
                   <p className="text-2xl font-bold text-green-700">
                     RM{metrics.totalRevenue?.toLocaleString()}
                   </p>
                 </div>
+
                 <div className="rounded-xl bg-white/40 p-4 backdrop-blur-sm">
                   <p className="text-xs text-black/60">Week Visitors</p>
-                  <p className="text-2xl font-bold text-purple-700">{metrics.weekVisitors}</p>
+                  <p className="text-2xl font-bold text-purple-700">
+                    {metrics.weekVisitors}
+                  </p>
                 </div>
+              </div>
+            )}
+
+            {/* 🔽 DEMAND + COLLECTION (BOTTOM, SAME LEVEL) */}
+            {metrics && (
+              <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-xl bg-white/40 p-4 backdrop-blur-sm">
                   <p className="text-xs text-black/60">Top Collection</p>
                   <p className="truncate text-lg font-bold text-black/90">
                     {metrics.topCollection}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-white/40 p-4 backdrop-blur-sm">
+                  <p className="text-xs text-black/60">Top Demand Item</p>
+                  <p className="truncate text-lg font-bold text-black/90">
+                    {metrics.topDemandItem}
                   </p>
                 </div>
               </div>

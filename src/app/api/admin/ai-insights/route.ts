@@ -11,16 +11,17 @@ export async function POST() {
     // =========================
     // 1. ITEMS
     // =========================
-    const { data: items } = await supabase
+    const { data: items = [] } = await supabase
       .from('items')
       .select('id, title, price, status')
 
-    const totalItems = items?.length ?? 0
-    const soldItems = items?.filter(i =>
-      i.status === 'sold' || i.status === 'offline_sold'
-    ) ?? []
+    const totalItems = items.length
 
-    const availableItems = items?.filter(i => i.status === 'available') ?? []
+    const soldItems = items.filter(
+      i => i.status === 'sold' || i.status === 'offline_sold'
+    )
+
+    const availableItems = items.filter(i => i.status === 'available')
 
     const totalRevenue = soldItems.reduce(
       (sum, i) => sum + Number(i.price || 0),
@@ -28,30 +29,61 @@ export async function POST() {
     )
 
     // =========================
-    // 2. WEEK VISITORS (REAL FIX)
+    // 2. WEEK VISITORS (✅ FIXED)
     // =========================
-    const sevenDaysAgo = new Date()
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+    const sevenDaysAgo = new Date(
+      Date.now() - 7 * 24 * 60 * 60 * 1000
+    ).toISOString()
 
-    const { data: views } = await supabase
+    const { data: weekViews = [] } = await supabase
       .from('analytics_item_views')
-      .select('visitor_id, created_at')
-      .gte('created_at', sevenDaysAgo.toISOString())
+      .select('visitor_id')
+      .gte('created_at', sevenDaysAgo)
 
-    const uniqueVisitors = new Set(
-      (views ?? []).map(v => v.visitor_id)
-    )
-
-    const weekVisitors = uniqueVisitors.size
+    const weekVisitors = new Set(
+      weekViews.map(v => v.visitor_id)
+    ).size
 
     // =========================
-    // 3. TOP COLLECTION (SIMPLE)
+    // 3. TOP DEMAND ITEM
+    // =========================
+    const [{ data: viewStats = [] }, { data: waStats = [] }] =
+      await Promise.all([
+        supabase.from('analytics_item_views').select('item_id'),
+        supabase.from('whatsapp_clicks').select('item_id'),
+      ])
+
+    const demandMap = new Map<string, number>()
+
+    viewStats.forEach(v => {
+      demandMap.set(v.item_id, (demandMap.get(v.item_id) || 0) + 1)
+    })
+
+    waStats.forEach(w => {
+      demandMap.set(w.item_id, (demandMap.get(w.item_id) || 0) + 3)
+    })
+
+    let topDemandItem = 'N/A'
+    let maxScore = 0
+
+    demandMap.forEach((score, itemId) => {
+      if (score > maxScore) {
+        maxScore = score
+        const item = items.find(i => i.id === itemId)
+        if (item) topDemandItem = item.title
+      }
+    })
+
+    // =========================
+    // 4. TOP COLLECTION (SOLD)
     // =========================
     const topCollection =
-      soldItems.length > 0 ? soldItems[0].title : 'N/A'
+      soldItems.length > 0
+        ? soldItems.sort((a, b) => Number(b.price) - Number(a.price))[0].title
+        : 'N/A'
 
     // =========================
-    // 4. METRICS OBJECT
+    // 5. METRICS
     // =========================
     const metrics = {
       totalItems,
@@ -60,38 +92,33 @@ export async function POST() {
       totalRevenue,
       weekVisitors,
       topCollection,
+      topDemandItem,
     }
 
     // =========================
-    // 5. AI PROMPT
+    // 6. AI PROMPT
     // =========================
     const prompt = `
-You are a senior AI Business Analyst for Kaira Atelier, a curated fashion & preloved store.
+You are a senior AI Business Analyst for Kaira Atelier.
 
-Analyze the following business metrics for this week and generate **3–4 concise, high-impact, and actionable business insights**.
+Generate 3–4 concise, actionable insights based on REAL demand signals.
 
-Business Data:
-- Total Items: ${totalItems}
-- Available Items: ${availableItems.length}
-- Sold Items: ${soldItems.length}
-- Total Revenue: RM${totalRevenue}
-- Weekly Visitors: ${weekVisitors}
-- Top Collection: ${topCollection}
+Metrics:
+- Total Items: ${metrics.totalItems}
+- Available Items: ${metrics.availableItems}
+- Sold Items: ${metrics.soldItems}
+- Revenue: RM${metrics.totalRevenue}
+- Weekly Visitors: ${metrics.weekVisitors}
+- Top Collection (Sold): ${metrics.topCollection}
+- Top Demand Item: ${metrics.topDemandItem}
 
-Guidelines:
-- Write in **clear, professional, but friendly English**
-- Focus on **patterns, opportunities, risks, and next actions**
-- Avoid repeating raw numbers unless needed for insight
-- Each point must suggest a **specific business action or decision**
-- Keep insights short, sharp, and practical
-
-Format:
-- Use bullet points (•)
-- 1 insight = 1–2 short sentences
-
+Rules:
+- Reference Top Demand Item clearly
+- Focus on inventory & conversion actions
+- Bullet points only
 `
 
-    const aiResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
@@ -103,13 +130,10 @@ Format:
       }),
     })
 
-    const aiJson = await aiResponse.json()
+    const aiJson = await aiRes.json()
     const insightText =
-      aiJson.choices?.[0]?.message?.content ?? 'Tiada insight.'
+      aiJson.choices?.[0]?.message?.content ?? 'No insight.'
 
-    // =========================
-    // 6. SAVE LOG
-    // =========================
     await supabase.from('ai_insight_logs').insert({
       insight_text: insightText,
       metrics,
@@ -134,11 +158,9 @@ export async function GET() {
     .limit(1)
     .single()
 
-  if (!data) return NextResponse.json({ cached: false })
-
   return NextResponse.json({
-    insight: data.insight_text,
-    metrics: data.metrics,
+    insight: data?.insight_text ?? null,
+    metrics: data?.metrics ?? null,
     cached: true,
   })
 }
