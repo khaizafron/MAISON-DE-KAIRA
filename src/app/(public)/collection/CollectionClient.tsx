@@ -67,7 +67,8 @@ export default function CollectionClient({
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ✅ UPGRADED GRID - 2 columns on mobile, 3 on desktop */}
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
         {filteredItems.map((item, index) => (
           <ItemCardWithCart
             key={item.id}
