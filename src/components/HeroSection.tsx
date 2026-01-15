@@ -124,7 +124,7 @@ export const HeroSection: React.FC = () => {
         className="absolute inset-1 border border-white/10 rounded-full"
       />
       <img
-  src="/star.PNG"
+  src="/star.png"
   alt="Star"
   className="h-4 w-4 md:h-5 md:w-5 relative z-10 drop-shadow-[0_0_8px_rgba(252,211,77,0.8)]"
 />
